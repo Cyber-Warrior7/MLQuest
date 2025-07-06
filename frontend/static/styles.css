@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; margin: 20px; }
+.container { display: flex; gap: 20px; }
+.left-panel { width: 40%; }
+.right-panel { width: 60%; }
+textarea { width: 100%; font-family: monospace; }
+pre { background: #f4f4f4; padding: 10px; }

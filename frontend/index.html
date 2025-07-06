@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MLQuest</title>
+  <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+  <h1>MLQuest Problems</h1>
+  <ul id="problem-list"></ul>
+  <script>
+    fetch('http://127.0.0.1:8000/problems/')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('problem-list');
+        data.forEach(p => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="problem.html?id=${p.id}">${p.title} (${p.difficulty})</a>`;
+          list.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Problem</title>
+  <link rel="stylesheet" href="static/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <h2 id="title"></h2>
+      <p id="description"></p>
+    </div>
+    <div class="right-panel">
+      <textarea id="code" rows="10" cols="60"></textarea><br>
+      <button id="run">Run</button>
+      <pre id="output"></pre>
+      <button id="submit">Submit</button>
+      <pre id="submit-result"></pre>
+    </div>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    fetch('http://127.0.0.1:8000/problems/')
+      .then(res => res.json())
+      .then(data => {
+        const p = data.find(x => x.id === id);
+        document.getElementById('title').innerText = p.title + ' (' + p.difficulty + ')';
+        document.getElementById('description').innerText = p.description;
+      });
+
+    document.getElementById('run').onclick = () => {
+      const code = document.getElementById('code').value;
+      fetch('http://127.0.0.1:8000/run/cell', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({code})
+      }).then(res => res.json())
+        .then(data => { document.getElementById('output').innerText = data.output; });
+    };
+
+    document.getElementById('submit').onclick = () => {
+      const code = document.getElementById('code').value;
+      fetch('http://127.0.0.1:8000/submit/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({problem_id: id, code})
+      }).then(res => res.json())
+        .then(data => { document.getElementById('submit-result').innerText = JSON.stringify(data); });
+    };
+  </script>
+</body>
+</html>

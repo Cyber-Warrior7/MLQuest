@@ -1,0 +1,9 @@
+{
+  "id": "titanic",
+  "title": "Predict Titanic Survivors",
+  "difficulty": "Easy",
+  "description": "Train a logistic regression model to predict survival on the Titanic dataset.",
+  "dataset": "titanic.csv",
+  "target": "Survived",
+  "metric": "accuracy"
+}
